@@ -1,0 +1,26 @@
+body {
+	background-image: url(../images/map.jpg);
+}
+
+.container {
+	text-align: center;
+	background-color: #ff9028;
+	/*white;*/
+	margin-top: 60px;
+	margin-bottom: 60px;
+	width: 60%;
+}
+
+h1 {
+	font-size: 60px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+p {
+	font-size: 24px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+#image {
+	padding: 15px;
+}
