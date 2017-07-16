@@ -16,11 +16,27 @@ h1 {
 	font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
+h2{
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+h3{
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
 p {
-	font-size: 24px;
-	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 22px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 #image {
+	padding: 15px;
+}
+
+.answers:hover{
+	color: white;
+}
+
+#gif{
 	padding: 15px;
 }
