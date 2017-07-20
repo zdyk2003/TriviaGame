@@ -1,3 +1,17 @@
+#startScreen{
+	position:absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    width:100%;
+    background-color:#aec3e5;
+    text-align: center; 
+}
+
+.startImage{
+	cursor: pointer;
+}
+
 body {
 	background-image: url(../images/map.jpg);
 }
@@ -5,10 +19,15 @@ body {
 .container {
 	text-align: center;
 	background-color: #ff9028;
-	/*white;*/
 	margin-top: 60px;
 	margin-bottom: 60px;
 	width: 60%;
+}
+.question1,
+.question2,
+.question3,
+.endScreen, {
+	
 }
 
 h1 {
