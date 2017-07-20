@@ -16,44 +16,15 @@ $(document).ready(function() {
 var startScreen;
 var audio = new Audio("assets/images/Hey you guuuuuuys.mp3");
 
-//create the timer
+//variables
 var timer = 20
 var intervalId;
-var unanswered = 0;
-
-function time() {
-	intervalId = setInterval(decrement, 1000);
-}
-
-function decrement() {
-	timer--;
-
-	$(".timer").html("<p>" + "Time Remaining:  " + timer + "</p>");
-
-	if(timer === 0) {
-		
-		stop();
-				unanswered++; 
-				questionCounter++;
-				console.log(questionCounter); 
-				$(".box").html("<h3>TIME'S UP!</h3><p>The correct answer is Astoria, OR.</p>")
-				$('<img id = "gif" src="assets/images/' + questions.question1.correctImage + '">').appendTo(".box");
-				console.log("no answer");
-	}
-}
-
-function stop() {
-	clearInterval(intervalId);	
-}
-
-time();
-
-
 var correct = 0;
 var inCorrect = 0;
 var unanswered = 0;
-var questionCounter = 0;
+var questionCounter = 1;
 
+//questions
 var questions = {
 	question1: {
 		question: "What city does the movie take place?",
@@ -74,111 +45,102 @@ var questions = {
 		correctImage: "oneEyedWilly.gif"
 	}
 }
+	
+
+//timer
+function time() {
+	intervalId = setInterval(decrement, 1000);
+}
+
+function decrement() {
+	timer--;
+
+	$(".timer").html("<p>" + "Time Remaining:  " + timer + "</p>");
+
+	if(timer === 0) {
+		
+		stop();
+				unanswered++; 
+				$(".box").html("<h3>TIME'S UP!</h3><p>The correct answer is " + questions['question' + questionCounter].correctAnswer + "</p>");
+				$('<img id = "gif" src="assets/images/' + questions['question' + questionCounter].correctImage + '">').appendTo(".box");
+				console.log("no answer");
+				questionCounter++;
+				console.log(questionCounter); 
+	}
+}
+
+function stop() {
+	clearInterval(intervalId);	
+}
+
+time();
 
 
-	// $("#question").html("<h2>" + 'questions' +['question1']+['question'] + "</h2>");
+	$("#question").text(questions['question' + questionCounter].question);
 
-	$(".question1").text(questions.question1.question);
-
-	for (var i = 0; i < questions.question1.answer.length; i++) {
-		$(".box").append("<h3 class = 'answers'>" + questions.question1.answer[i] + "</h3>");
-		console.log(questions.question1.answer[i]);
+	for (var i = 0; i < questions['question' + questionCounter].answer.length; i++) {
+		$(".box").append("<h3 class = 'answers'>" + questions['question' + questionCounter].answer[i] + "</h3>");
+		console.log(questions['question' + questionCounter].answer[i]);
 	}
 
-	$(".answers").on("click", function(e){
+	$("body").on("click", ".answers", function answerClick(e){
 		var userClick = e.currentTarget.innerText;
 
-			if(userClick === questions.question1.correctAnswer) {
+			if(userClick === questions['question' + questionCounter].correctAnswer) {
 				stop();
 				correct++;
 				console.log(correct);
+				$(".box").html("<h3>CORRECT!!</h3>");
+				$('<img id = "gif" src="assets/images/' + questions['question' + questionCounter].correctImage + '">').appendTo(".box");
 				questionCounter++;
 				console.log(questionCounter);
-				$(".box").html("<h3>CORRECT!!</h3> <p>Goonies took place in Astoria, OR.</p>");
-				$('<img id = "gif" src="assets/images/' + questions.question1.correctImage + '">').appendTo(".box");
 				// setTimeout function(); 
-			}
-			else if (userClick !== questions.question1.correctAnswer) {
+			}	
+			else if (userClick !== questions['question' + questionCounter].correctAnswer) {
 				stop();
 				inCorrect++;
 				console.log(inCorrect);
+				$(".box").html("<h3>WRONG!</h3><p>The correct answer is  " + questions['question' + questionCounter].correctAnswer + ".</p>")
+				$('<img id = "gif" src="assets/images/' + questions['question' + questionCounter].correctImage + '">').appendTo(".box");
 				questionCounter++;
 				console.log(questionCounter);
-				$(".box").html("<h3>WRONG!</h3><p>The correct answer is Astoria, OR.</p>")
-				$('<img id = "gif" src="assets/images/' + questions.question1.correctImage + '">').appendTo(".box");
-				console.log("wrong")
 			}
-
+			checkIfDone();
+			
+			
 	});
 
-// 	$("#question").text(questions.question2.question);
+function checkIfDone (){
+	var counter = 1;
+	if(counter === 4){
+		//there are 3 questions
+		endGame();
+	}
 
-// 	for (var i = 0; i < questions.question2.answer.length; i++) {
-// 		$(".box").append("<h3 class = 'answers'>" + questions.question2.answer[i] + "</h3>");
+	else {
+		//this clears the box and then the next group of answers won't show up
+		// setTimeout(function() {
+		// 	$(".box").empty();
+		// 	}, 3000);		
+		time();
+		timer = 20;		
+		$("#question").text(questions['question' + questionCounter].question);
+			for (var i = 0; i < questions['question' + questionCounter].answer.length; i++) {
+				$(".box").append("<h3 class = 'answers'>" + questions['question' + questionCounter].answer[i] + "</h3>");
+				console.log(questions['question' + questionCounter].answer[i]);
+			}
 
-// 	}
+	}
+}
 
-// 	$(".answers").on("click", function(e){
-// 		var userClick = e.currentTarget.innerText;
-
-// 			if(userClick === questions.question2.correctAnswer) {
-// 				stop();
-// 				correct++;
-// 				console.log(correct);
-// 				$(".box").html("<h3>CORRECT!!</h3> <p>Chunk had to do the Truffle Shuffle.</p>");
-// 				$('<img id = "gif" src="assets/images/truffleShuffle.gif">').appendTo(".box");
-// 				console.log("yay for you")
-
-// 			}
-// 			else if (userClick !== questions.question2.correctAnswer) {
-// 				stop();
-// 				inCorrect++;
-// 				console.log(inCorrect);
-// 				$(".box").html("<h3>WRONG!</h3><p>The correct answer is the Truffle Shuffle.</p>")
-// 				$('<img id = "gif" src="assets/images/truffleShuffle.gif">').appendTo(".box");
-// 				console.log("wrong")
-// 			}
-// 	});
-
-
-
-// 	$("#question").text(questions.question3.question);
-
-// 	for (var i = 0; i < questions.question3.answer.length; i++) {
-// 		$(".box").append("<h3 class = 'answers'>" + question3.answer[i] + "</h3>");
-// 	}
-
-// 	$(".answers").on("click", function(e){
-// 		var userClick = e.currentTarget.innerText;
-
-// 			if(userClick === questions.question3.correctAnswer) {
-// 				stop();
-// 				correct++;
-// 				console.log(correct);
-// 				$(".box").html("<h3>CORRECT!!</h3> <p>The Goonies are searching for One-Eyed Willy's treasure.</p>");
-// 				$('<img id = "gif" src="assets/images/oneEyedWilly.gif">').appendTo(".box");
-// 				console.log("yay for you")
-
-// 			}
-// 			else if (userClick !== questions.question3.correctAnswer) {
-// 				stop();
-// 				inCorrect++;
-// 				console.log(inCorrect);
-// 				$(".box").html("<h3>WRONG!</h3><p>The correct answer is One-Eyed Willy.</p>")
-// 				$('<img id = "gif" src="assets/images/oneEyedWilly.gif">').appendTo(".box");
-// 				console.log("wrong")
-// 			}
-// 	});
-
-
-// function endGame() {
-// 	if (counter === 3){
-// 		$("correct").html("<h3>" + "You got" + correct + "questons right!" + "</h3>");
-// 		$("inCorrect").html("<h3>" + "You got" + inCorrect + "questons wrong!" + "</h3>");
-// 		$("unanswered").html("<h3>" + "You did not answer" + unanswered + "questons." + "</h3>");
-// 		$('<img id = "gif" src="assets/images/mikeyWell.gif">').appendTo(".box");
-// 	}
-// }
+function endGame() {
+		$(".timer").empty();
+		$("correct").html("<h3>" + "You got" + correct + "questons right!" + "</h3>");
+		$("inCorrect").html("<h3>" + "You got" + inCorrect + "questons wrong!" + "</h3>");
+		$("unanswered").html("<h3>" + "You did not answer" + unanswered + "questons." + "</h3>");
+		$('<img id = "gif" src="assets/images/mikeyWell.gif">').appendTo(".box");
+		
+}
 
 
 
