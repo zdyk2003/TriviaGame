@@ -64,8 +64,20 @@ function decrement() {
 				$(".box").html("<h3>TIME'S UP!</h3><p>The correct answer is " + questions['question' + questionCounter].correctAnswer + "</p>");
 				$('<img id = "gif" src="assets/images/' + questions['question' + questionCounter].correctImage + '">').appendTo(".box");
 				console.log("no answer");
+				setTimeout(function() {
+					$(".box").html("");
+					$("#gif").attr("src", "");
 				questionCounter++;
 				console.log(questionCounter); 
+				time();
+				timer = 20;		
+				$("#question").text(questions['question' + questionCounter].question);
+					for (var i = 0; i < questions['question' + questionCounter].answer.length; i++) {
+						$(".box").append("<h3 class = 'answers'>" + questions['question' + questionCounter].answer[i] + "</h3>");
+						console.log(questions['question' + questionCounter].answer[i]);
+					}
+
+				}, 3000);
 	}
 }
 
@@ -92,9 +104,10 @@ time();
 				console.log(correct);
 				$(".box").html("<h3>CORRECT!!</h3>");
 				$('<img id = "gif" src="assets/images/' + questions['question' + questionCounter].correctImage + '">').appendTo(".box");
+				$(".answer").empty()	
 				questionCounter++;
 				console.log(questionCounter);
-				// setTimeout function(); 
+				
 			}	
 			else if (userClick !== questions['question' + questionCounter].correctAnswer) {
 				stop();
@@ -102,6 +115,8 @@ time();
 				console.log(inCorrect);
 				$(".box").html("<h3>WRONG!</h3><p>The correct answer is  " + questions['question' + questionCounter].correctAnswer + ".</p>")
 				$('<img id = "gif" src="assets/images/' + questions['question' + questionCounter].correctImage + '">').appendTo(".box");
+				// setTimeout(checkIfDone, 4000);
+
 				questionCounter++;
 				console.log(questionCounter);
 			}
@@ -111,35 +126,50 @@ time();
 	});
 
 function checkIfDone (){
-	var counter = 1;
-	if(counter === 4){
+	// var counter = 1;
+	if(questionCounter === 4){
 		//there are 3 questions
-		endGame();
-	}
-
-	else {
-		//this clears the box and then the next group of answers won't show up
-		// setTimeout(function() {
-		// 	$(".box").empty();
-		// 	}, 3000);		
-		time();
-		timer = 20;		
+setTimeout(function() {
 		$("#question").text(questions['question' + questionCounter].question);
 			for (var i = 0; i < questions['question' + questionCounter].answer.length; i++) {
 				$(".box").append("<h3 class = 'answers'>" + questions['question' + questionCounter].answer[i] + "</h3>");
 				console.log(questions['question' + questionCounter].answer[i]);
 			}
-
+		}, 3000);
+		endGame();
 	}
+
+	else{
+		time();
+		timer = 20;
+	
+		setTimeout(function() {
+		$(".box").html("");
+		$("#gif").attr("src", "");
+			
+		$("#question").text(questions['question' + questionCounter].question);
+			for (var i = 0; i < questions['question' + questionCounter].answer.length; i++) {
+				$(".box").append("<h3 class = 'answers'>" + questions['question' + questionCounter].answer[i] + "</h3>");
+				console.log(questions['question' + questionCounter].answer[i]);
+			}
+		}, 3000);
+		console.log("counter is " + questionCounter);
+	}
+	
 }
 
 function endGame() {
+		console.log("it's over");
+		$("#startScreen").html("");
 		$(".timer").empty();
+		$(".box").html("");
+		$("#gif").attr("src", "");
 		$("correct").html("<h3>" + "You got" + correct + "questons right!" + "</h3>");
 		$("inCorrect").html("<h3>" + "You got" + inCorrect + "questons wrong!" + "</h3>");
 		$("unanswered").html("<h3>" + "You did not answer" + unanswered + "questons." + "</h3>");
 		$('<img id = "gif" src="assets/images/mikeyWell.gif">').appendTo(".box");
-		
+
+
 }
 
 
