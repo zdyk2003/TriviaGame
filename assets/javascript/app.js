@@ -145,13 +145,6 @@ function checkIfDone (){
 			}, 2500);
 
 	}
-	// else if (unanswered === 3) {
-
-	// 	setTimeout(function() {
-	// 		stop();
-	// 		endGame2();
-	// 		}, 2500);
-	// }
 	else {
 
 		time();
@@ -199,7 +192,7 @@ function endGame2() {
 		$(".box").html("");
 		$("#gif").attr("src", "");
 		audio2.play();
-		$("#question").html("<h3>" +  "You got didn't answer any questions!" + "<br>" + "You can't be a Goonie." + "</h3>");
+		$("#question").html("<h3>" +  "You didn't answer any questions!" + "<br>" + "You can't be a Goonie." + "</h3>");
 		$('<img id = "gif" src="assets/images/mikeyWell.gif">').appendTo(".box");
 		setTimeout(function() {
 			location.reload();
