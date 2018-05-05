@@ -16,6 +16,7 @@ body {
 	background-image: url(../images/map.jpg);
 	font-family: "Comic Sans MS", sans-serif;
 	font-family: 'Roboto', sans-serif;
+	cursor: pointer;
 }
 
 .container {
